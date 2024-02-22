@@ -1,0 +1,127 @@
+*, *::after, *::before {
+  box-sizing: border-box;
+}
+
+/* 通用樣式 */
+.d-flex {
+  display: flex;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-flexible {
+  flex: 1 1 0
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.btn-sm {
+  width: 100px;
+
+  @media screen and (max-width: 530px) {
+    width: calc(33.33% - 10px);
+  }
+}
+
+.btn-lg {
+  width: 100%;
+}
+
+/* 元件樣式 */
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 20px;
+  font-family: "Roboto", sans-serif;
+}
+
+.calculator {
+  margin: 16px;
+  padding: 30px;
+  max-width: 500px;
+  border: 5px solid #425069;
+  border-radius: 10px;
+  background-color: #697ca0;
+
+  @media screen and (max-width: 530px) {
+    padding: 20px;
+  }
+}
+
+.calculator-output {
+  padding: 0 16px;
+  margin-bottom: 10px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  background-color: #fff;
+
+  @media screen and (max-width: 530px) {
+    padding: 0 8px;
+  }
+}
+
+.calculator-output-num {
+  letter-spacing: 1px;
+  @media screen and (max-width: 530px) {
+    font-size: 32px;
+  }
+}
+
+.calculator-output-calc {
+  padding: 8px 0;
+  font-size: 32px;
+  color: #e69468;
+}
+
+.calculator-calcButtons {
+  width: 100px;
+
+  @media screen and (max-width: 530px) {
+    width: 25%;
+  }
+}
+
+button {
+  height: 60px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  box-shadow: 0 3px 0px #000;
+  transition: all ease .5s;
+}
+
+button:hover {
+  margin-top: 3px;
+  margin-bottom: -3px;
+  background-color: #d4dbe7;
+  box-shadow: 0 0 0px #000;
+}
+
+.btn-result {
+  background-color: #e69468;
+}
+
+.btn-result:hover {
+  background-color: #d37c4d;
+}
+
+.btn-fn {
+  background-color: #ece2c7;
+}
+
+.btn-fn:hover {
+  background-color: #ebd69d;
+}

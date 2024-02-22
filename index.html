@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  
+  <!-- normalize -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+  <!-- google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <!-- customize -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="wrap">
+    <div class="calculator">
+      <div class="calculator-output d-flex justify-between">
+        <span class="calculator-output-calc">+</span>
+        <h1 class="calculator-output-num">1234567890</h1>
+      </div>
+      <div class="calculator-buttons d-flex justify-between gap-10">
+        <div class="calculator-main d-flex flex-column flex-flexible gap-10">
+          <div class="calculator-fnButtons d-flex justify-between gap-10">
+            <button type="button" class="flex-flexible btn-fn">Reset</button>
+            <button type="button" class="btn-sm btn-fn">Del</button>
+          </div>
+          <div class="calculator-numButtons d-flex flex-wrap justify-between gap-10">
+            <button type="button" class="btn-sm">7</button>
+            <button type="button" class="btn-sm">8</button>
+            <button type="button" class="btn-sm">9</button>
+            <button type="button" class="btn-sm">4</button>
+            <button type="button" class="btn-sm">5</button>
+            <button type="button" class="btn-sm">6</button>
+            <button type="button" class="btn-sm">1</button>
+            <button type="button" class="btn-sm">2</button>
+            <button type="button" class="btn-sm">3</button>
+            <button type="button" class="btn-lg">0</button>
+          </div>
+        </div>
+        <div class="calculator-calcButtons d-flex flex-column gap-10">
+          <button type="button" class="btn-lg btn-fn">/</button>
+          <button type="button" class="btn-lg btn-fn">*</button>
+          <button type="button" class="btn-lg btn-fn">-</button>
+          <button type="button" class="btn-lg btn-fn">+</button>
+          <button type="button" class="btn-lg btn-result">=</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
