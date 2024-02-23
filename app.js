@@ -94,6 +94,7 @@ fnButtons.addEventListener('click', (event) =>  {
     let param = '';
 
     if(clickAction === 'Reset') {
+      outputNum.classList.remove("smaller");
       param = {
         num: 0,
         calc: clickAction,
@@ -117,6 +118,7 @@ numButtons.addEventListener('click', (event) =>  {
   if(event.target.nodeName === 'BUTTON') {
     const clickNum = Number(event.target.textContent);
     let current = action.currentNum;
+    outputNum.classList.remove("smaller");
 
     if(current === 0 && clickNum === 0) {
       current = 0;
@@ -134,7 +136,7 @@ numButtons.addEventListener('click', (event) =>  {
         document.querySelector('.alert-text').classList.remove("show");
       }, 2000);
     }
-  
+    
     action.currentNum = Number(current);
     outputNum.textContent = current;
     calcButtons.classList.remove('disable');
@@ -145,10 +147,15 @@ calcButtons.addEventListener('click', (event) =>  {
   if(event.target.nodeName === 'BUTTON') {
     let clickCalc = event.target.textContent;
     const { currentNum } = action;
+    outputNum.classList.remove("smaller");
 
     if(clickCalc === '=') {
       action.numbers.push(currentNum);
       const total = calcFn["="](action.numbers);
+
+      if(`${total}`.length >= 12) {
+        outputNum.classList.add("smaller");
+      }
 
       calcFn.Reset({
         num: total,
