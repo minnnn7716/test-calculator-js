@@ -3,6 +3,10 @@
 }
 
 /* 通用樣式 */
+.text-end {
+  text-align: right;
+}
+
 .d-flex {
   display: flex;
 }
@@ -30,7 +34,7 @@
 .btn-sm {
   width: 100px;
 
-  @media screen and (max-width: 530px) {
+  @media screen and (max-width: 550px) {
     width: calc(33.33% - 10px);
   }
 }
@@ -44,20 +48,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   font-size: 20px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Noto Sans TC", sans-serif;
 }
 
 .calculator {
-  margin: 16px;
+  position: relative;
+  margin: 48px 16px;
   padding: 30px;
   max-width: 500px;
   border: 5px solid #425069;
   border-radius: 10px;
   background-color: #697ca0;
 
-  @media screen and (max-width: 530px) {
+  @media screen and (max-width: 550px) {
     padding: 20px;
   }
 }
@@ -69,29 +74,54 @@
   border-radius: 5px;
   background-color: #fff;
 
-  @media screen and (max-width: 530px) {
+  @media screen and (max-width: 550px) {
     padding: 0 8px;
   }
 }
 
 .calculator-output-num {
+  margin: 4px 0 24px 0;
   letter-spacing: 1px;
-  @media screen and (max-width: 530px) {
+  @media screen and (max-width: 550px) {
     font-size: 32px;
   }
 }
 
+.calculator-output-process {
+  height: 20px;
+  margin: 8px 0 0 0;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #9c9c9c;
+}
+
 .calculator-output-calc {
-  padding: 8px 0;
-  font-size: 32px;
+  margin: 8px 0;
+  font-size: 24px;
   color: #e69468;
 }
 
 .calculator-calcButtons {
   width: 100px;
 
-  @media screen and (max-width: 530px) {
+  @media screen and (max-width: 550px) {
     width: 25%;
+  }
+}
+
+.disable {
+  .btn-fn {
+    color: #5c5c5c;
+    border-color: #585858;
+    background-color: #9c9c9c;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  .btn-fn:hover {
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #9c9c9c;
   }
 }
 
@@ -100,6 +130,7 @@ button {
   border: 2px solid #000;
   border-radius: 5px;
   box-shadow: 0 3px 0px #000;
+  cursor: pointer;
   transition: all ease .5s;
 }
 
@@ -124,4 +155,25 @@ button:hover {
 
 .btn-fn:hover {
   background-color: #ebd69d;
+}
+
+.alert-text {
+  min-width: 250px;
+  position: absolute;
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 8px 16px;
+  border-radius: 40px;
+  text-align: center;
+  font-size: 16px;
+  color: #631a26;
+  background-color: #ffd1d9;
+  opacity: 0;
+  transition: opacity ease .3s;
+}
+
+.alert-text.show {
+  opacity: 100%;
 }
