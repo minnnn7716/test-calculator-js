@@ -151,10 +151,16 @@ calcButtons.addEventListener('click', (event) =>  {
 
     if(clickCalc === '=') {
       action.numbers.push(currentNum);
-      const total = calcFn["="](action.numbers);
+      let total = calcFn["="](action.numbers);
 
       if(`${total}`.length >= 12) {
         outputNum.classList.add("smaller");
+      }
+
+      if(!isFinite(total) && !isNaN(total)) {
+        total = '無法除以零';
+      } else if (isNaN(total)) {
+        total = '無法計算';
       }
 
       calcFn.Reset({
