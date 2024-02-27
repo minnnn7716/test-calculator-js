@@ -1,60 +1,69 @@
-const fnButtons = document.querySelector('.calculator-fnButtons');
-const numButtons = document.querySelector('.calculator-numButtons');
-const calcButtons = document.querySelector('.calculator-calcButtons');
-const outputNum = document.querySelector('.calculator-output-num');
-const outputCalc = document.querySelector('.calculator-output-calc');
-const outputProcess = document.querySelector('.calculator-output-process');
+let data = {
+  currentNum: 0,
+  numbers: [],
+  calcAction: [],
+  disableFn: false
+};
+
+let result = 0;
 
 const calcFn = {
   Reset: ({ num, calc, delay }) => {
-    // 此函式用於點擊「Reset」鍵或「=」
-    // 1. 清空 data
-    // 2. 移除運算鍵的鎖定
-    action = {
+    const calcButtons = document.querySelector('.calculator-calcButtons');
+
+    data = {
       currentNum: 0,
       numbers: [],
       calcAction: [],
-      result: 0,
     };
 
     calcFn.changeOutput(num, calc, delay);
-    calcButtons.classList.remove('disable');
+
+    if(typeof num === 'string') {
+      calcButtons.classList.add('disable');
+      calcButtons.classList.add('disableResult');
+      result = 0;
+    } else {
+      calcButtons.classList.remove('disable');
+      calcButtons.classList.remove('disableResult');
+    }
   },
   Del: ({ num, calc, delay }) => {
     if(num) {
       const str = num.toString();
 
       if(str.length > 1) {
-        action.currentNum =  Number(str.slice(0, str.length - 1));
+        data.currentNum =  Number(str.slice(0, str.length - 1));
       } else {
-        action.currentNum = 0;
+        data.currentNum = 0;
       }
       
 
-      calcFn.changeOutput(action.currentNum, calc, delay);
+      calcFn.changeOutput(data.currentNum, calc, delay);
     }
   },
   "+": (num1, num2) => num1 + num2,
   "-": (num1, num2) => num1 - num2,
   "*": (num1, num2) => num1 * num2,
   "/": (num1, num2) => num1 / num2,
-  "=": (ary) => {
-    const { calcAction } = action;
-    let total = ary[0];
+  "=": (numbers, calcAction) => {
+    let total = numbers[0];
 
     for(let i = 0; i < calcAction.length; i += 1) {
-      total = calcFn[calcAction[i]](total, ary[i + 1]);
+      total = calcFn[calcAction[i]](total, numbers[i + 1]);
     }
 
-    if(`${total}`.includes('.')) {
-      const fixNum = 10 - `${total}`.split('.')[0].length - 1;
-      total = total.toFixed(fixNum);
+    if(`${total}`.includes('.') && `${total}`.split('.')[1].length > 10) {
+      total = Number(total.toFixed(10));
     }
 
     return total;
   },
   changeOutput(num, calc, delay) {
-    const { numbers, calcAction } = action;
+    const outputNum = document.querySelector('.calculator-output-num');
+    const outputCalc = document.querySelector('.calculator-output-calc');
+    const outputProcess = document.querySelector('.calculator-output-process');
+    const { numbers, calcAction } = data;
 
     if(calc && calc !== '=') {
       let str = '';
@@ -80,16 +89,15 @@ const calcFn = {
   },
 };
 
-let action = {
-  currentNum: 0,
-  numbers: [],
-  calcAction: [],
-  disableFn: false,
-  result: 0,
-};
+function listenFnButtons() {
+  const fnButtons = document.querySelector('.calculator-fnButtons');
+  const outputNum = document.querySelector('.calculator-output-num');
 
-fnButtons.addEventListener('click', (event) =>  {
-  if(event.target.nodeName === 'BUTTON') {
+  fnButtons.addEventListener('click', (event) => {
+    if(event.target.nodeName !== 'BUTTON') {
+      return;
+    }
+
     const clickAction = event.target.textContent;
     let param = '';
 
@@ -104,20 +112,29 @@ fnButtons.addEventListener('click', (event) =>  {
 
     if(clickAction === 'Del') {
       param = {
-        num: action.currentNum,
+        num: data.currentNum,
         calc: clickAction,
         delay: true
       };
     }
 
     calcFn[clickAction](param);
-  }
-})
+  });
+};
 
-numButtons.addEventListener('click', (event) =>  {
-  if(event.target.nodeName === 'BUTTON') {
+function listenNumButtons () {
+  const numButtons = document.querySelector('.calculator-numButtons');
+  const calcButtons = document.querySelector('.calculator-calcButtons');
+  const outputNum = document.querySelector('.calculator-output-num');
+
+  numButtons.addEventListener('click', (event) => {
+    if(event.target.nodeName !== 'BUTTON') {
+      return;
+    }
+
     const clickNum = Number(event.target.textContent);
-    let current = action.currentNum;
+    let current = data.currentNum;
+    
     outputNum.classList.remove("smaller");
 
     if(current === 0 && clickNum === 0) {
@@ -130,32 +147,42 @@ numButtons.addEventListener('click', (event) =>  {
     }
 
     if(current.toString().length >= 10) {
-      document.querySelector('.alert-text').classList.add("show");
+      const alertText = document.querySelector('.alert-text');
+      alertText.classList.add("show");
 
       setTimeout(() => {
-        document.querySelector('.alert-text').classList.remove("show");
+        alertText.classList.remove("show");
       }, 2000);
     }
     
-    action.currentNum = Number(current);
+    data.currentNum = Number(current);
     outputNum.textContent = current;
     calcButtons.classList.remove('disable');
-  }
-})
+  });
+}
 
-calcButtons.addEventListener('click', (event) =>  {
-  if(event.target.nodeName === 'BUTTON') {
+function listenCalcButtons () {
+  const calcButtons = document.querySelector('.calculator-calcButtons');
+  const outputNum = document.querySelector('.calculator-output-num');
+
+  calcButtons.addEventListener('click', (event) => {
+    if(event.target.nodeName !== 'BUTTON') {
+      return;
+    }
+  
     let clickCalc = event.target.textContent;
-    const { currentNum } = action;
+    const { currentNum } = data;
     outputNum.classList.remove("smaller");
 
     if(clickCalc === '=') {
-      action.numbers.push(currentNum);
-      let total = calcFn["="](action.numbers);
+      data.numbers.push(currentNum);
+      let total = calcFn["="](data.numbers, data.calcAction);
 
       if(`${total}`.length >= 12) {
         outputNum.classList.add("smaller");
       }
+
+      result = total;
 
       if(!isFinite(total) && !isNaN(total)) {
         total = '無法除以零';
@@ -168,22 +195,30 @@ calcButtons.addEventListener('click', (event) =>  {
         calc: clickCalc,
         delay: false
       });
-    } 
+      return;
+    }
     
-    if(clickCalc !== '=') {
-      action.numbers.push(currentNum);
-      action.calcAction.push(clickCalc);
-      calcButtons.classList.add('disable');
-      
-      calcFn.changeOutput(0, clickCalc, false);
+    if(result) {
+      data.numbers.push(result);
+      result = 0;
+    } else {
+      data.numbers.push(currentNum);
     }
 
-    action.currentNum = 0;
-  }
-})
+    data.calcAction.push(clickCalc);
+    calcButtons.classList.add('disable');
+    
+    calcFn.changeOutput(0, clickCalc, false);
+    data.currentNum = 0;
+  });
+}
 
 function init() {
   calcFn.changeOutput(0, '', false);
-}
+
+  listenFnButtons();
+  listenNumButtons();
+  listenCalcButtons();
+};
 
 init();
