@@ -134,6 +134,7 @@ function listenNumButtons () {
 
     const clickNum = Number(event.target.textContent);
     let current = data.currentNum;
+    result = 0;
     
     outputNum.classList.remove("smaller");
 
@@ -144,9 +145,7 @@ function listenNumButtons () {
       current += clickNum;
     } else if(current.toString().length < 10) {
       current = current.toString() + clickNum;
-    }
-
-    if(current.toString().length >= 10) {
+    } else {
       const alertText = document.querySelector('.alert-text');
       alertText.classList.add("show");
 
