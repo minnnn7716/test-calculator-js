@@ -143,6 +143,22 @@
   }
 }
 
+.disableResult {
+  .btn-result {
+    color: #5c5c5c;
+    border-color: #585858;
+    background-color: #9c9c9c;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  .btn-result:hover {
+    margin-top: 0;
+    margin-bottom: 0;
+    background-color: #9c9c9c;
+  }
+}
+
 button {
   height: 60px;
   border: 2px solid #000;
